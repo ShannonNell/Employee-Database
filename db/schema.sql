@@ -1,6 +1,11 @@
 DROP TABLE IF EXISTS employees;
-DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS department;
+DROP TABLE IF EXISTS role;
+
+CREATE TABLE department (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL
+);
 
 CREATE TABLE employees (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -13,12 +18,6 @@ CREATE TABLE employees (
 CREATE TABLE role (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
-    -- decimal(m, d) where m is max number of digits up to 65, d = digits to right of decimal up to 30
-    salary DECIMAL (10, 2),
+    salary DECIMAL(8, 2),
     department_id INTEGER
-);
-
-CREATE TABLE department (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) NOT NULL
 );
