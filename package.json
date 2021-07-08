@@ -1,0 +1,25 @@
+{
+  "name": "challenge12",
+  "version": "1.0.0",
+  "description": "## Description:  A command-line app to manage a company's employee database using Node.js, Inquirer, and MySQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShannonNell/UoT-coding-challenge-12.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShannonNell/UoT-coding-challenge-12/issues"
+  },
+  "homepage": "https://github.com/ShannonNell/UoT-coding-challenge-12#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "inquirer": "^8.1.1",
+    "mysql2": "^2.2.5"
+  }
+}
