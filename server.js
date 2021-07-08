@@ -12,8 +12,8 @@ function viewAllDept() {
     db.query(`SELECT * FROM department;`, function(err, res) {
         if (err) throw err;
         console.table(res);
-    })
-}
+    });
+};
 
 // ============= View all Roles: job title, role id, department role belongs to, salary ============ //
 function viewAllRoles() {
@@ -23,12 +23,22 @@ function viewAllRoles() {
     function(err, res) {
         if (err) throw err;
         console.table(res);
-    })
-}
+    });
+};
+
+// ============= View all Employees: emp ids, first, last name, job title, departments, salaries, managers that emps report to ============ //
+function viewAllEmployees() {
+    db.query(`SELECT * FROM employees JOIN role ON employees.role_id = role.id`,
+    function(err, res) {
+        if (err) throw err;
+        console.table(res);
+    });
+};
 
 
 
 
 
 // viewAllDept();
-viewAllRoles();
+// viewAllRoles();
+viewAllEmployees();
