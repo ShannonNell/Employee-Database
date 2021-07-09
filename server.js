@@ -107,11 +107,82 @@ function addRole() {
     });
 }
 
-// =============  ============ //
+// ============= Add an Employee ============ //
+function addEmployee() {
+    inquirer.prompt([
+        {
+            name: "firstName",
+            type: "input",
+            message: "Enter the employees first name."
+        },
+        {
+            name: "lastName",
+            type: "input",
+            message: "Enter the employees last name."
+        },
+        {
+            name: "role",
+            type: "list",
+            message: "What is the employees role?",
+            choices: selectRole()
+        },
+        {
+            name: "manager",
+            type: "list",
+            message: "Who is their manager?",
+            choices: selectManager()
+        },
+    ]).then(function (res) {
+        var roleId = selectRole().indexOf(res.role) + 1
+        var managerId = selectManager().indexOf(res.manager) + 1
+        db.query("INSERT INTO employees SET ?", 
+        {
+            first_name: res.firstName,
+            last_name: res.lastName,
+            manager_id: managerId,
+            role_id: roleId
+            
+        }, function(err){
+            if (err) throw err
+            console.table(res)
+            // startPrompt()
+        })
+    })
+};
+
+// ============= Select role queries role title for add employee prompt ============ //
+var roleArr = [];
+function selectRole() {
+    db.query(`SELECT * FROM role`, function (err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+            roleArr.push(res[i].title);
+        }
+    })
+    return roleArr;
+};
+
+// ============= Select role queries manager for add employee prompt  ============ //
+var managerArr = [];
+function selectManager() {
+    db.query(`SELECT first_name, last_name 
+    FROM employees 
+    WHERE manager_id 
+    IS NULL`, function (err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+            managerArr.push(res[i].first_name);
+        }
+    })
+    return managerArr;
+}
+
 
 
 // viewAllDept();
 // viewAllRoles();
 // viewAllEmployees();
 // addDept();
-addRole();
+// addRole();
+
+addEmployee();
