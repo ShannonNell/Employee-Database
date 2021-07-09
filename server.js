@@ -28,16 +28,30 @@ function viewAllRoles() {
 
 // ============= View all Employees: emp ids, first, last name, job title, departments, salaries, managers that emps report to ============ //
 function viewAllEmployees() {
-    db.query(`SELECT * FROM employees JOIN role ON employees.role_id = role.id`,
-    `SELECT employees.id, employees.first_name, employees.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ', e.last_name) AS Manager FROM employees INNER JOIN role on role.id = employees.role_id INNER JOIN department ON department.id = role.department_id LEFT JOIN employees e ON employees.manager_id = e.id;`,
+    // db.query(`SELECT * FROM employees JOIN role ON employees.role_id = role.id`,
+    db.query(`SELECT employees.id, employees.first_name, employees.last_name, role.title AS job_title, department.name AS department, role.salary, CONCAT(e.first_name, ' ', e.last_name) AS Manager 
+    FROM employees 
+    INNER JOIN role 
+    ON role.id = employees.role_id 
+    INNER JOIN department 
+    ON department.id = role.department_id 
+    LEFT JOIN employees e 
+    ON employees.manager_id = e.id;`,
     function(err, res) {
         if (err) throw err;
         console.table(res);
     });
 };
-//select all from emp and dep
-// another select from managers table
-//nested join
+
+
+// ============= Add a Department ============ //
+
+
+
+
+
+// =============  ============ //
+// =============  ============ //
 
 
 
