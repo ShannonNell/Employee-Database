@@ -5,14 +5,12 @@ const inquirer = require('inquirer');
 const PORT = process.env.PORT || 3001;
 console.log('Listening on port 3001.');
 
-// viewAllDept();
-// db.query(`SELECT employees.first_name, employees.last_name, department.name AS Department FROM employees JOIN role ON employees.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employees.id;`),
-
 // ============= View all Department names and department ids ============ //
 function viewAllDept() {
     db.query(`SELECT * FROM department;`, function (err, res) {
         if (err) throw err;
         console.table(res);
+        // startPrompt()
     });
 };
 
@@ -24,6 +22,7 @@ function viewAllRoles() {
         function (err, res) {
             if (err) throw err;
             console.table(res);
+            // startPrompt()
         });
 };
 
@@ -41,6 +40,7 @@ function viewAllEmployees() {
         function (err, res) {
             if (err) throw err;
             console.table(res);
+            // startPrompt()
         });
 };
 
@@ -63,6 +63,7 @@ function addDept() {
             function (err) {
                 if (err) throw err;
                 console.table(res);
+                // startPrompt()
             }
         )
     });
@@ -101,6 +102,7 @@ function addRole() {
                 function (err) {
                     if (err) throw err
                     console.table(res);
+                    // startPrompt()
                 }
             )
         });
@@ -199,12 +201,12 @@ function updateEmployees() {
             console.table(res);
         })
         db.query(`SELECT * FROM employees;`,
-        function (err, res) {
-            if (err) throw err;
-            console.table(res);
-            console.log('The employee has been successfully updated.');
-            //startPrompt();
-        });
+            function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                console.log('The employee has been successfully updated.');
+                //startPrompt();
+            });
     });
 }
 
@@ -215,7 +217,7 @@ function updateEmployees() {
 // addDept();
 // addRole();
 // addEmployee();
-updateEmployees();
+// updateEmployees();
 
 
 
