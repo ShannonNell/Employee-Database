@@ -5,12 +5,72 @@ const inquirer = require('inquirer');
 const PORT = process.env.PORT || 3001;
 console.log('Listening on port 3001.');
 
+// ============= Initial Prompt ============ //
+function mainMenu() {
+    inquirer.prompt([
+        {
+            name: "mainMenu",
+            type: "list",
+            message: `
+            MAIN MENU
+            ---------
+            Please select an option.
+            `,
+            choices: [
+                "View all Departments",
+                "View all Roles",
+                "View all Employees",
+                "Add a Department", 
+                "Add a Role",
+                "Add an Employee", 
+                "Update an Employee Role",
+                "Quit"
+            ]
+        }
+    ]).then(function (res) {
+        switch (res.mainMenu) {
+            case "View all Departments":
+                viewAllDept();
+            break;
+
+            case "View all Roles":
+                viewAllRoles();
+            break;
+
+            case "View all Employees":
+                viewAllEmployees();
+            break;
+
+            case "Add a Department":
+                addDept();
+            break;
+
+            case "Add a Role":
+                addRole();
+            break;
+
+            case "Add an Employee":
+                addEmployee();
+            break;
+
+            case "Update an Employee Role":
+                updateEmployees();
+            break;
+
+            case "Quit":
+                console.log("Thanks for updating your database, goodbye!");
+            break;
+        }
+    })
+};
+
+
 // ============= View all Department names and department ids ============ //
 function viewAllDept() {
     db.query(`SELECT * FROM department;`, function (err, res) {
         if (err) throw err;
         console.table(res);
-        // startPrompt()
+        mainMenu()
     });
 };
 
@@ -22,7 +82,7 @@ function viewAllRoles() {
         function (err, res) {
             if (err) throw err;
             console.table(res);
-            // startPrompt()
+            mainMenu()
         });
 };
 
@@ -40,7 +100,7 @@ function viewAllEmployees() {
         function (err, res) {
             if (err) throw err;
             console.table(res);
-            // startPrompt()
+            mainMenu()
         });
 };
 
@@ -63,7 +123,7 @@ function addDept() {
             function (err) {
                 if (err) throw err;
                 console.table(res);
-                // startPrompt()
+                mainMenu()
             }
         )
     });
@@ -102,7 +162,7 @@ function addRole() {
                 function (err) {
                     if (err) throw err
                     console.table(res);
-                    // startPrompt()
+                    mainMenu()
                 }
             )
         });
@@ -147,7 +207,7 @@ function addEmployee() {
             }, function (err) {
                 if (err) throw err
                 console.table(res)
-                // startPrompt()
+                mainMenu()
             })
     })
 };
@@ -205,24 +265,12 @@ function updateEmployees() {
                 if (err) throw err;
                 console.table(res);
                 console.log('The employee has been successfully updated.');
-                //startPrompt();
+                mainMenu();
             });
     });
 }
 
-
-// viewAllDept();
-// viewAllRoles();
-// viewAllEmployees();
-// addDept();
-// addRole();
-// addEmployee();
-// updateEmployees();
-
-
-
-
-
+mainMenu();
 // Things to do potentially:
 //update employee full name rather than just last name
 //separate files into own api routes?
