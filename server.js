@@ -179,45 +179,35 @@ function selectManager() {
 
 // ============= Update employee  ============ //
 function updateEmployees() {
-    db.query(`SELECT CONCAT(employees.first_name, ' ', employees.last_name) AS Employee, role.title 
-    FROM employees 
-    JOIN role 
-    ON employees.role_id = role.id;`,
+    inquirer.prompt([
+        {
+            name: "empName",
+            type: "input",
+            message: "What is the employee's ID you want to be updated?",
+        },
+        {
+            name: "newRole",
+            type: "input",
+            message: "Enter the new role ID for that employee.",
+        },
+    ]).then(function (res) {
+        const empName = res.empName;
+        const newRole = res.newRole;
+        const dbUpdate = `UPDATE employees SET role_id = "${newRole}" WHERE id = "${empName}"`;
+        db.query(dbUpdate, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+        })
+        db.query(`SELECT * FROM employees;`,
         function (err, res) {
             if (err) throw err;
+            console.table(res);
+            console.log('The employee has been successfully updated.');
+            //startPrompt();
+        });
+    });
+}
 
-            inquirer.prompt([
-                {
-                    name: "empName",
-                    type: "rawlist",
-                    message: "What is the employee's name?",
-                    choices: function () {
-                        let empName = [];
-                        for (var i = 0; i < res.length; i++) {
-                            empName.push(res[i].Employee);
-                        }
-                        return empName;
-                    }
-                },
-                {
-                    name: "role", 
-                    type: "rawlist",
-                    message: "What is the employees new role?",
-                    choices: selectRole()
-                },
-            ]).then(function (res) {
-                let newRole = selectRole().indexOf(res.role) + 1;
-                console.log(newRole);
-                let updateEmp = res.newEmp;
-                db.query(`UPDATE employees SET role_id = "${newRole}" WHERE id = "${updateEmp}";`,
-                function(err) {
-                    if (err) throw err;
-                    console.table(res);
-                    //startPrompt();
-                });
-            });
-        }
-    )};
 
 // viewAllDept();
 // viewAllRoles();
