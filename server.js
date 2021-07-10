@@ -55,7 +55,7 @@ function addDept() {
             message: "What Department would you like to add?"
         }
     ]).then(function (res) {
-        var query = db.query(
+        let query = db.query(
             `INSERT INTO department (name) VALUES (?)`,
             {
                 name: res.name
@@ -133,25 +133,25 @@ function addEmployee() {
             choices: selectManager()
         },
     ]).then(function (res) {
-        var roleId = selectRole().indexOf(res.role) + 1
-        var managerId = selectManager().indexOf(res.manager) + 1
-        db.query("INSERT INTO employees SET ?", 
-        {
-            first_name: res.firstName,
-            last_name: res.lastName,
-            manager_id: managerId,
-            role_id: roleId
-            
-        }, function(err){
-            if (err) throw err
-            console.table(res)
-            // startPrompt()
-        })
+        let roleId = selectRole().indexOf(res.role) + 1
+        let managerId = selectManager().indexOf(res.manager) + 1
+        db.query("INSERT INTO employees SET ?",
+            {
+                first_name: res.firstName,
+                last_name: res.lastName,
+                manager_id: managerId,
+                role_id: roleId
+
+            }, function (err) {
+                if (err) throw err
+                console.table(res)
+                // startPrompt()
+            })
     })
 };
 
-// ============= Select role queries role title for add employee prompt ============ //
-var roleArr = [];
+// ============= Select role query(role title) for add employee prompt ============ //
+let roleArr = [];
 function selectRole() {
     db.query(`SELECT * FROM role`, function (err, res) {
         if (err) throw err;
@@ -162,8 +162,8 @@ function selectRole() {
     return roleArr;
 };
 
-// ============= Select role queries manager for add employee prompt  ============ //
-var managerArr = [];
+// ============= Select role query (manager) for add employee prompt  ============ //
+let managerArr = [];
 function selectManager() {
     db.query(`SELECT first_name, last_name 
     FROM employees 
@@ -177,12 +177,60 @@ function selectManager() {
     return managerArr;
 }
 
+// ============= Update employee  ============ //
+function updateEmployees() {
+    db.query(`SELECT CONCAT(employees.first_name, ' ', employees.last_name) AS Employee, role.title 
+    FROM employees 
+    JOIN role 
+    ON employees.role_id = role.id;`,
+        function (err, res) {
+            if (err) throw err;
 
+            inquirer.prompt([
+                {
+                    name: "empName",
+                    type: "rawlist",
+                    message: "What is the employee's name?",
+                    choices: function () {
+                        let empName = [];
+                        for (var i = 0; i < res.length; i++) {
+                            empName.push(res[i].Employee);
+                        }
+                        return empName;
+                    }
+                },
+                {
+                    name: "role", 
+                    type: "rawlist",
+                    message: "What is the employees new role?",
+                    choices: selectRole()
+                },
+            ]).then(function (res) {
+                let newRole = selectRole().indexOf(res.role) + 1;
+                console.log(newRole);
+                let updateEmp = res.newEmp;
+                db.query(`UPDATE employees SET role_id = "${newRole}" WHERE id = "${updateEmp}";`,
+                function(err) {
+                    if (err) throw err;
+                    console.table(res);
+                    //startPrompt();
+                });
+            });
+        }
+    )};
 
 // viewAllDept();
 // viewAllRoles();
 // viewAllEmployees();
 // addDept();
 // addRole();
+// addEmployee();
+updateEmployees();
 
-addEmployee();
+
+
+
+
+// Things to do potentially:
+//update employee full name rather than just last name
+//separate files into own api routes?
