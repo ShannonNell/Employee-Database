@@ -115,8 +115,8 @@ function addDept() {
             message: "What Department would you like to add?"
         }
     ]).then(function (res) {
-        let query = db.query(
-            `INSERT INTO department (name) VALUES (?)`,
+        const query = db.query(
+            `INSERT INTO department SET ?`,
             {
                 name: res.name
             },
