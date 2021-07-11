@@ -25,7 +25,7 @@ ___
 ## Usage
 
 
-![screenshotHere](ch12_ss.png)
+![screenshotHere](/assets/images/ch12_ss.png)
 ___
 
 ## Links
