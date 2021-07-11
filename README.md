@@ -10,8 +10,6 @@ ___
 * [Installation](#installation)
 * [Usage](#usage)
 * [Links](#links)
-* [Features](#features)
-* [Tests](#tests)
 * [Tools](#tools)
 * [Credits](#credits)
 * [License](#license)
@@ -19,26 +17,20 @@ ___
 ___
 
 ## Installation
+Clone the repo to your local machine then open the terminal and run `npm install` to install the dependencies. Be sure to create your own .env file in the root directory with your mysql login credentials and include it in your .gitignore file.
 
+Then login to your mysql and run `source db/db.sql` to set up the database and `source db/schema.sql` to define the tables. If you would like to use my mock entries, run `source db/seeds.sql. Use `quit` to exit out of mysql then in the terminal once again enter `npm start` to begin the application.
 ___
 
 ## Usage
 
 
-![screenshotHere](/assets/images/)
+![screenshotHere](ch12_ss.png)
 ___
 
 ## Links
 ### Walkthrough of app:
-* [Video Walkthrough]()
-___
-
-## Features
-
-___
-
-## Tests
-
+* [Video Walkthrough](https://drive.google.com/file/d/1E3egmrjHTY6ZrP9aIIMCWGwT6uU756Gg/view)
 ___
 
 ## Tools
@@ -46,6 +38,8 @@ ___
 * node.js
 * Inquirer 
 * MySQL
+* Console.table
+* Dotenv
 
 ___
 

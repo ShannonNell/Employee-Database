@@ -271,6 +271,3 @@ function updateEmployees() {
 }
 
 mainMenu();
-// Things to do potentially:
-//update employee full name rather than just last name
-//separate files into own api routes?
